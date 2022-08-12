@@ -1,7 +1,7 @@
 .PHONY: build run
 
 # Default values for variables
-REPO  ?= dorowu/ubuntu-desktop-lxde-vnc
+REPO  ?= renzhn/ubuntu-desktop-lxde-vnc
 TAG   ?= latest
 # you can choose other base image versions
 IMAGE ?= ubuntu:20.04

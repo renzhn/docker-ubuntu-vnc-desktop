@@ -121,6 +121,13 @@ COPY rootfs /
 RUN ln -sf /usr/local/lib/web/frontend/static/websockify /usr/local/lib/web/frontend/static/novnc/utils/websockify && \
 	chmod +x /usr/local/lib/web/frontend/static/websockify/run
 
+
+# anydesk
+RUN wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add - \
+    && echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list \
+    && apt update \
+    && apt install -y anydesk
+
 EXPOSE 80
 WORKDIR /root
 ENV HOME=/home/ubuntu \
