@@ -31,7 +31,7 @@ RUN apt update \
 RUN apt update \
     && apt install -y --no-install-recommends --allow-unauthenticated \
         xvfb x11vnc \
-        vim-tiny firefox chromium-browser ttf-ubuntu-font-family ttf-wqy-zenhei  \
+        vim-tiny firefox ttf-ubuntu-font-family ttf-wqy-zenhei  \
     && add-apt-repository -r ppa:fcwu-tw/apps \
     && apt autoclean -y \
     && apt autoremove -y \
@@ -117,6 +117,7 @@ LABEL maintainer="fcwu.tw@gmail.com"
 
 COPY --from=builder /src/web/dist/ /usr/local/lib/web/frontend/
 COPY rootfs /
+RUN rm /usr/share/applications/chromium-browser-sound.desktop
 RUN ln -sf /usr/local/lib/web/frontend/static/websockify" "/usr/local/lib/web/frontend/static/novnc/utils/websockify && chmod +x /usr/local/lib/web/frontend/static/websockify/run
 RUN ln -sf /usr/local/lib/web/frontend/static/websockify /usr/local/lib/web/frontend/static/novnc/utils/websockify && \
 	chmod +x /usr/local/lib/web/frontend/static/websockify/run
