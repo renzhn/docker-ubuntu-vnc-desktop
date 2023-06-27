@@ -32,13 +32,14 @@ RUN apt update \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
+# chrome
 RUN apt update \
-    && apt install -y gpg-agent \
-    && curl -LO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && (dpkg -i ./google-chrome-stable_current_amd64.deb || apt-get install -fy) \
-    && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add \
-    && rm google-chrome-stable_current_amd64.deb \
-    && rm -rf /var/lib/apt/lists/*
+    && apt install -y wget gpg-agent \
+	&& wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
+# curl -sS https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
+	&& echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/chrome.list \
+	&& apt update \
+    && apt install -y google-chrome-stable
 
 RUN apt update \
     && apt install -y --no-install-recommends --allow-unauthenticated \
@@ -123,10 +124,10 @@ RUN ln -sf /usr/local/lib/web/frontend/static/websockify /usr/local/lib/web/fron
 
 
 # anydesk
-RUN wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add - \
-    && echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list \
-    && apt update \
-    && apt install -y anydesk
+#RUN wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add - \
+#    && echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list \
+#    && apt update \
+#    && apt install -y anydesk
 
 EXPOSE 80
 WORKDIR /root
